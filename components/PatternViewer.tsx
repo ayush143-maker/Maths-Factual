@@ -4,12 +4,18 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import type { PatternId } from '@/lib/patterns'
 
-const CREATE_DURATION = 1.4
-const CREATE_STAGGER = 1.2
+const BUILD = 1.6
+const STAG = 1.2
+const HOLD = 3.2
+const DISS = 1.1
+const STAG_D = 0.8
+const CYCLE = BUILD + STAG + HOLD + DISS + STAG_D
 
 const fract = (v: number) => v - Math.floor(v)
 const rnd = (i: number, salt: number) =>
   fract(Math.sin(i * 127.1 + salt * 311.7) * 43758.5453)
+const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1)
+const easeOut = (p: number) => 1 - Math.pow(1 - p, 3)
 
 type Built = {
   targets: number[]
@@ -69,32 +75,23 @@ function build(pattern: PatternId): Built {
         push((x1 / d) * 4.6, (x2 / d) * 4.6, (x3 / d) * 4.6, f / fibers)
       }
     }
-  } else if (pattern === 'attractor') {
-    camera = [0, 0, 24]
-    spin = 0.18
-    const count = 16000
-    const b = 0.208186
-    const dt = 0.03
-    let x = 0.5
-    let y = 0.5
-    let z = 0.5
-    for (let i = 0; i < 300; i++) {
-      const dx = Math.sin(y) - b * x
-      const dy = Math.sin(z) - b * y
-      const dz = Math.sin(x) - b * z
-      x += dx * dt
-      y += dy * dt
-      z += dz * dt
-    }
+  } else if (pattern === 'butterfly') {
+    camera = [0, 0, 20]
+    tilt = 0
+    spin = 0.12
+    const count = 15000
+    const maxTheta = 24 * Math.PI
     for (let i = 0; i < count; i++) {
-      const dx = Math.sin(y) - b * x
-      const dy = Math.sin(z) - b * y
-      const dz = Math.sin(x) - b * z
-      x += dx * dt
-      y += dy * dt
-      z += dz * dt
-      const speed = Math.sqrt(dx * dx + dy * dy + dz * dz)
-      push(x * 1.8, y * 1.8, z * 1.8, 0.5 + Math.min(speed, 2) * 0.16)
+      const theta = rnd(i, 1) * maxTheta
+      const r =
+        Math.exp(Math.sin(theta)) -
+        2 * Math.cos(4 * theta) +
+        Math.pow(Math.sin((2 * theta - Math.PI) / 24), 5)
+      const jitter = (rnd(i, 2) - 0.5) * 0.18
+      const x = Math.sin(theta) * (r + jitter) * 2.6
+      const y = Math.cos(theta) * (r + jitter) * 2.6
+      const z = (rnd(i, 3) - 0.5) * 0.6
+      push(x, y, z, theta / maxTheta)
     }
   } else if (pattern === 'rose') {
     camera = [0, 0, 21]
@@ -131,19 +128,21 @@ function build(pattern: PatternId): Built {
       push(x * 0.24, (z - 25) * 0.24, y * 0.24, 0.55 + (i / count) * 0.45)
     }
   } else if (pattern === 'fibonacci') {
-    camera = [0, 0, 24]
-    tilt = 0.25
-    spin = 0.1
-    const count = 10000
+    camera = [0, 0, 22]
+    tilt = 0.4
+    spin = 0.16
+    const count = 12000
     const golden = Math.PI * (3 - Math.sqrt(5))
+    const R = 8
     for (let i = 0; i < count; i++) {
-      const r = Math.sqrt(i) * 0.115
+      const y = 1 - (2 * (i + 0.5)) / count
+      const rad = Math.sqrt(Math.max(0, 1 - y * y))
       const theta = i * golden
       push(
-        r * Math.cos(theta),
-        r * Math.sin(theta),
-        (rnd(i, 3) - 0.5) * 0.6,
-        0.68 + (i / count) * 0.6
+        Math.cos(theta) * rad * R,
+        y * R,
+        Math.sin(theta) * rad * R,
+        i / count
       )
     }
   } else {
@@ -288,6 +287,9 @@ export default function PatternViewer({
       group.rotation.y = time * built.spin
       group.scale.setScalar(1 + Math.sin(time * 0.6) * 0.02)
 
+      const tc = time % CYCLE
+      const dissolveBase = BUILD + STAG + HOLD
+
       for (let i = 0; i < count; i++) {
         const i3 = i * 3
         const seed = seeds[i]
@@ -295,24 +297,29 @@ export default function PatternViewer({
         const ty = built.targets[i3 + 1]
         const tz = built.targets[i3 + 2]
 
-        const p = (time - seed * CREATE_STAGGER) / CREATE_DURATION
+        const be = easeOut(clamp01((tc - seed * STAG) / BUILD))
+        const de = easeOut(
+          clamp01((tc - (dissolveBase + (1 - seed) * STAG_D)) / DISS)
+        )
 
-        if (p < 1) {
-          const e = p <= 0 ? 0 : 1 - Math.pow(1 - p, 3)
-          const ang = (1 - e) * 2.5
-          const c = Math.cos(ang)
-          const s = Math.sin(ang)
-          positions[i3] = (tx * c - tz * s) * e
-          positions[i3 + 1] = ty * e
-          positions[i3 + 2] = (tx * s + tz * c) * e
-          alphas[i] = e
-        } else {
-          const w = Math.sin(time * 1.4 + seed * 6.28318) * 0.05
-          positions[i3] = tx + w
-          positions[i3 + 1] = ty + Math.cos(time * 1.2 + seed * 6.28318) * 0.05
-          positions[i3 + 2] = tz + w
-          alphas[i] = 1
+        const scale = be * (1 + de * 1.2)
+        const ang = (1 - be) * 2.5 + de * 3
+        const c = Math.cos(ang)
+        const s = Math.sin(ang)
+
+        let px = (tx * c - tz * s) * scale
+        let py = ty * scale
+        let pz = (tx * s + tz * c) * scale
+
+        if (be === 1 && de === 0) {
+          px += Math.sin(time * 1.4 + seed * 6.28318) * 0.05
+          py += Math.cos(time * 1.2 + seed * 6.28318) * 0.05
         }
+
+        positions[i3] = px
+        positions[i3 + 1] = py
+        positions[i3 + 2] = pz
+        alphas[i] = be * (1 - de)
 
         const hue = built.hues[i] + time * 0.03
         const light = 0.52 + Math.sin(time * 1.8 + seed * 6.28318) * 0.12
