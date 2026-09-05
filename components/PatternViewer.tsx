@@ -4,6 +4,9 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { patterns, type PatternId } from '@/lib/patterns'
 
+const ZOOM_IN_SECONDS = 50
+const ZOOM_PERIOD = ZOOM_IN_SECONDS * 2
+
 const vertexShader = `
   varying vec2 vUv;
   void main() {
@@ -25,7 +28,6 @@ const fragmentShader = `
   uniform float uMode;
   uniform float uJulia;
   uniform float uAnimJulia;
-  uniform float uAbs;
   uniform float uConj;
   uniform float uPower;
   uniform vec2 uC;
@@ -73,7 +75,6 @@ const fragmentShader = `
       for (int k = 0; k < 900; k++) {
         if (k >= int(uIter)) break;
         if (uConj > 0.5) z.y = -z.y;
-        if (uAbs > 0.5) z = abs(z);
         if (uPower > 2.5) {
           z = cmul(cmul(z, z), z) + c;
         } else {
@@ -138,7 +139,7 @@ export default function PatternViewer({
       powerPreference: 'high-performance',
     })
     renderer.setClearColor('#000000')
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
 
     const scene = new THREE.Scene()
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
@@ -152,7 +153,6 @@ export default function PatternViewer({
       uMode: { value: cfg.mode },
       uJulia: { value: cfg.julia },
       uAnimJulia: { value: cfg.animJulia },
-      uAbs: { value: cfg.abs },
       uConj: { value: cfg.conj },
       uPower: { value: cfg.power },
       uC: { value: new THREE.Vector2(...cfg.c) },
@@ -193,7 +193,8 @@ export default function PatternViewer({
       frame = requestAnimationFrame(animate)
       time += 0.016
 
-      const phase = (1 - Math.cos(time * cfg.speed)) / 2
+      const phase =
+        (1 - Math.cos((2 * Math.PI * time) / ZOOM_PERIOD)) / 2
       const zoom = Math.pow(cfg.zoomMax, phase)
 
       uniforms.uTime.value = time
