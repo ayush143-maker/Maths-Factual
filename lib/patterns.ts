@@ -1,16 +1,16 @@
 export type PatternId =
-  | 'helix'
-  | 'wave'
-  | 'lissajous'
+  | 'mobius'
+  | 'hopf'
+  | 'attractor'
   | 'rose'
   | 'lorenz'
   | 'fibonacci'
   | 'torus'
 
 export const patterns: { id: PatternId; label: string }[] = [
-  { id: 'helix', label: 'Helix' },
-  { id: 'wave', label: 'Wave' },
-  { id: 'lissajous', label: 'Lissajous' },
+  { id: 'mobius', label: 'Möbius' },
+  { id: 'hopf', label: 'Hopf Fibration' },
+  { id: 'attractor', label: 'Strange Attractor' },
   { id: 'rose', label: 'Rose' },
   { id: 'lorenz', label: 'Lorenz' },
   { id: 'fibonacci', label: 'Fibonacci' },
