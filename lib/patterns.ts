@@ -1,7 +1,7 @@
 export type PatternId =
   | 'mobius'
   | 'hopf'
-  | 'attractor'
+  | 'butterfly'
   | 'rose'
   | 'lorenz'
   | 'fibonacci'
@@ -10,7 +10,7 @@ export type PatternId =
 export const patterns: { id: PatternId; label: string }[] = [
   { id: 'mobius', label: 'Möbius' },
   { id: 'hopf', label: 'Hopf Fibration' },
-  { id: 'attractor', label: 'Strange Attractor' },
+  { id: 'butterfly', label: 'Butterfly' },
   { id: 'rose', label: 'Rose' },
   { id: 'lorenz', label: 'Lorenz' },
   { id: 'fibonacci', label: 'Fibonacci' },
