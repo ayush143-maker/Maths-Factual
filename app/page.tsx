@@ -5,10 +5,10 @@ import PatternViewer from '@/components/PatternViewer'
 import { patterns, type PatternId } from '@/lib/patterns'
 
 export default function Home() {
-  const [pattern, setPattern] = useState<PatternId>('helix')
+  const [pattern, setPattern] = useState<PatternId>('mobius')
 
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-[#050505] text-white">
+    <main className="relative h-screen w-full overflow-hidden bg-black text-white">
       <PatternViewer pattern={pattern} />
 
       <div className="pointer-events-none fixed inset-0 z-10 flex flex-col justify-between p-6">
@@ -16,7 +16,7 @@ export default function Home() {
           <h1 className="text-sm font-semibold uppercase tracking-[0.4em] text-white/90 md:text-base">
             Mathematical Patterns
           </h1>
-          <p className="mt-1 text-xs text-white/40">Select a pattern</p>
+          <p className="mt-1 text-xs text-white/40">Infinite loops in motion</p>
         </div>
 
         <div className="pointer-events-auto flex flex-wrap gap-2">
