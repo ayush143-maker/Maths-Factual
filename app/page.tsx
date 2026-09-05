@@ -5,21 +5,21 @@ import PatternViewer from '@/components/PatternViewer'
 import { patterns, type PatternId } from '@/lib/patterns'
 
 export default function Home() {
-  const [pattern, setPattern] = useState<PatternId>('mobius')
+  const [pattern, setPattern] = useState<PatternId>('seahorse')
 
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-[#020208] text-white">
+    <main className="relative h-screen w-full overflow-hidden bg-black text-white">
       <PatternViewer pattern={pattern} />
 
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(0,0,0,0.75)_100%)]" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,0.6)_100%)]" />
 
       <div className="pointer-events-none fixed inset-0 z-10 flex flex-col justify-between p-6">
         <div>
           <h1 className="bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-amber-300 bg-clip-text text-sm font-semibold uppercase tracking-[0.4em] text-transparent md:text-base">
-            Mathematical Patterns
+            Fractal Depths
           </h1>
           <p className="mt-1 text-xs text-white/40">
-            Infinite loops in motion
+            Infinite zoom in motion
           </p>
         </div>
 
