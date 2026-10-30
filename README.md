@@ -23,6 +23,15 @@ The Next.js page is in `app/`, reusable components are in `components/`, and sup
 
 When changing the pattern, keep its selection, parameters, and rendered scene consistent. The root includes `tailwind.config.ts` and `next.config.mjs`; review their existing contents before changing styling or framework settings. If you move or rename files, update imports and preserve valid relative paths. The root `package.json` and TypeScript configuration describe project setup.
 
+## Asset and loading review checklist
+
+This is a checklist of actions to perform, not a record of verified results.
+
+- Inspect `app/`, `components/`, and `lib/` for local image, audio, font, or other media references. Check that each referenced file exists at the expected path and loads where used.
+- Look for media files that are no longer referenced and remove only those confirmed to be unused. Size used media for its rendered role; avoid keeping unnecessarily large originals or duplicate variants.
+- Review `package.json`, source imports, and the Next.js configuration for external font or script dependencies. Keep external requests only when intentional, and check that the page remains usable if an optional request is unavailable.
+- After changing or moving assets, revisit the page and check that imports and relative paths still resolve.
+
 ## Manual review checklist
 
 This is a checklist of actions to perform, not a record of verified results.
