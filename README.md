@@ -1,6 +1,6 @@
 # Maths-Factual
 
-An interactive mathematical-pattern visualiser built with Next.js, React, and Three.js. It opens with a seahorse-inspired pattern rendered through the shared `PatternViewer`, which presents the visualisation for visitors to explore. Specific interaction controls are not described here.
+A mathematical-pattern visualiser built with Next.js, React, and Three.js. It opens with a seahorse-inspired pattern rendered through the shared `PatternViewer` component. Specific interaction controls are not described here.
 
 ## Run locally
 
