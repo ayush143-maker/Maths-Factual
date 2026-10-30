@@ -4,12 +4,14 @@ An interactive mathematical-pattern visualiser built with Next.js, React, and Th
 
 ## Run locally
 
-Install dependencies and start the development server:
+From the project folder, install dependencies and start the development server:
 
     npm install
     npm run dev
 
-Build the production version with:
+Open the local URL printed by the server in your browser.
+
+To build the production version, run:
 
     npm run build
 
