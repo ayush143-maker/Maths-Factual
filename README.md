@@ -1,18 +1,22 @@
 # Maths-Factual
 
-A mathematical-pattern visualiser built with Next.js, React, and Three.js. It opens with a seahorse-inspired pattern rendered through the shared `PatternViewer` component. Specific interaction controls are not described here.
+A mathematical-pattern visualiser built with Next.js, React, and Three.js. It opens with a seahorse-inspired pattern rendered by the shared `PatternViewer` component.
 
 ## Run locally
 
 From the project folder, install dependencies and start the development server:
 
-    npm install
-    npm run dev
+```sh
+npm install
+npm run dev
+```
 
-Open the local URL printed by the server in a browser and review the visualisation after making a change. To build the production version, run:
+Open the local URL printed by the server. To create a production build, run:
 
-    npm run build
+```sh
+npm run build
+```
 
-## Working with the patterns
+## Project structure
 
-The Next.js page is under `app/`, reusable interface pieces are under `components/`, and supporting logic is under `lib/`. Preserve the relationship between the selected pattern, its parameters, and the rendered scene when extending the project. At the root, `package.json` and the Next.js and TypeScript configuration files describe the project setup.
+The Next.js page is in `app/`, reusable components are in `components/`, and supporting logic is in `lib/`. When extending the project, preserve the relationship between the selected pattern, its parameters, and the rendered scene. The root `package.json` and Next.js and TypeScript configuration files describe the project setup.
