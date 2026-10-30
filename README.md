@@ -77,3 +77,9 @@ These are future review checks, not verified accessibility results.
 - Review controls for meaningful accessible names and consider whether the visualisation needs a text description or is decorative.
 - Check text, labels, and control boundaries for contrast against their backgrounds.
 - If the visualisation moves or animates, check behavior with the operating system’s reduced-motion preference enabled.
+
+## Final release review
+
+- Confirm the documented starting point still matches the files present at the repository root.
+- Check the scripts and dependency versions in `package.json`; use the repository's declared workflow rather than assuming a generic build command.
+- Review the published result once on a narrow screen and once on a wider screen; treat this as a release check, not an automated test report.
