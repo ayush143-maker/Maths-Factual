@@ -23,6 +23,12 @@ The Next.js page is in `app/`, reusable components are in `components/`, and sup
 
 When changing the pattern, keep its selection, parameters, and rendered scene consistent. The root includes `tailwind.config.ts` and `next.config.mjs`; review their existing contents before changing styling or framework settings. If you move or rename files, update imports and preserve valid relative paths. The root `package.json` and TypeScript configuration describe project setup.
 
+## Configuration and data handling
+
+The listed root files do not include a `.env.example` or `.env` file. Do not assume this project needs environment variables; check the relevant source and existing configuration before adding any. If local configuration is needed, keep real secrets out of tracked files and provide only a placeholder template when documenting required settings. Never put a secret in code or configuration that is delivered to the browser: browser-visible values are public, not secret.
+
+Review changes to `next.config.mjs` and `tailwind.config.ts` before committing them, and avoid adding credentials or private data to tracked configuration or project content.
+
 ## Browser and platform reliability review checklist
 
 This is a checklist for a future review, not a record of completed testing or verified results.
