@@ -9,7 +9,7 @@ From the project folder, install dependencies and start the development server:
     npm install
     npm run dev
 
-Open the local URL printed by the server in your browser and review the visualisation after making a change. To build the production version, run:
+Open the local URL printed by the server in a browser and review the visualisation after making a change. To build the production version, run:
 
     npm run build
 
