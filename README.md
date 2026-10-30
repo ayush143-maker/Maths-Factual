@@ -15,4 +15,4 @@ Open the local URL printed by the server in your browser. To build the productio
 
 ## Working with the patterns
 
-The Next.js page is under `app/`, reusable interface pieces are under `components/`, and supporting logic is under `lib/`. Preserve the relationship between the selected pattern, its parameters, and the rendered scene when extending the project. The root also contains `package.json` and Next.js and TypeScript configuration files.
+The Next.js page is under `app/`, reusable interface pieces are under `components/`, and supporting logic is under `lib/`. Preserve the relationship between the selected pattern, its parameters, and the rendered scene when extending the project. At the root, `package.json` and the Next.js and TypeScript configuration files describe the project setup.
