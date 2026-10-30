@@ -31,3 +31,13 @@ This is a checklist of actions to perform, not a record of verified results.
 - Try any interactions actually presented by the page or `PatternViewer`. Observe the effect on the pattern; do not assume controls that are not present.
 - Inspect the rendered pattern and page at a narrow mobile-sized viewport and a wide desktop-sized viewport. Check that the visualisation and any visible controls fit and remain usable.
 - After changing the pattern, review the rendered scene and check that its selection, parameters, and appearance remain consistent. If files were moved or renamed, check the affected imports and paths.
+
+## Accessibility review checklist
+
+These are future review checks, not verified accessibility results.
+
+- Use Tab and Shift+Tab to check whether all controls actually presented by the page or `PatternViewer` can be reached and operated from the keyboard. Check that focus order is logical and that no interaction depends only on a pointer.
+- Check that keyboard focus is clearly visible on each focused control and is not hidden by the rendered pattern or other content.
+- Review visible controls for meaningful accessible names. Check whether the seahorse-inspired visualisation has an appropriate text description if it communicates information beyond its appearance, and whether purely decorative visual content is identified as such.
+- Check text, labels, and control boundaries against their backgrounds for sufficient contrast in the rendered page; consider text placed over or near the pattern.
+- If the visualisation moves or animates, check its behavior with the operating system's reduced-motion preference enabled and review whether the page remains usable with motion reduced.
