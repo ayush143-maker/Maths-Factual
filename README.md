@@ -17,6 +17,8 @@ Open the local URL printed by the server. To create a production build, run:
 npm run build
 ```
 
-## Project structure
+## Project structure and customization
 
-The Next.js page is in `app/`, reusable components are in `components/`, and supporting logic is in `lib/`. When extending the project, preserve the relationship between the selected pattern, its parameters, and the rendered scene. The root `package.json` and Next.js and TypeScript configuration files describe the project setup.
+The Next.js page is in `app/`, reusable components are in `components/`, and supporting logic is in `lib/`. For visible page text or composition, begin with the relevant page in `app/`; for the seahorse-inspired rendering, begin with `PatternViewer` in `components/` and follow any supporting logic in `lib/`.
+
+When changing the pattern, keep its selection, parameters, and rendered scene consistent. The root includes `tailwind.config.ts` and `next.config.mjs`; review their existing contents before changing styling or framework settings. If you move or rename files, update imports and preserve valid relative paths. The root `package.json` and TypeScript configuration describe project setup.
